@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zpotify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #0e0322;
+        }
+        .search-container {
+            margin-bottom: 30px;
+        }
+        .search-bar {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #caffff;
+            color: #0e0322;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #6FBEA2FF;
+        }
+        audio {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+<h1>Search and Play Songs</h1>
+<div class="search-container">
+    <form action="/audio" method="GET">
+        <input
+                type="text"
+                name="song"
+                placeholder="Type a song name..."
+                class="search-bar"
+                required
+        />
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+<audio controls>
+    <source src="" type="audio/mpeg" id="audio-source">
+    Your browser does not support the audio element.
+</audio>
+<script>
+    // Dynamically update the audio player
+    const form = document.querySelector('form');
+    const audioSource = document.getElementById('audio-source');
+    const audioPlayer = document.querySelector('audio');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent the regular form submission to load a new page
+
+        // Get the song name from the input
+        const songName = form.song.value.trim();
+
+        // Update the audio source and play the song
+        audioSource.src = `/audio?song=${encodeURIComponent(songName)}`;
+        audioPlayer.load(); // Reload the audio element with new source
+    });
+</script>
+</body>
+</html>
